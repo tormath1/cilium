@@ -72,7 +72,7 @@ func (*LBMockMap) IsMaglevLookupTableRecreated(ipv6 bool) bool {
 	return true
 }
 
-func (m *LBMockMap) DeleteService(addr lb.L3n4AddrID, backendCount int, maglev bool) error {
+func (m *LBMockMap) DeleteService(addr lb.L3n4AddrID, backendCount int, maglev bool, natPolicy lb.SVCNatPolicy) error {
 	svc, found := m.ServiceByID[uint16(addr.ID)]
 	if !found {
 		return fmt.Errorf("Service not found %+v", addr)
