@@ -308,6 +308,10 @@ type BackendHTTPFilter struct {
 	// ResponseHeaderModifier can be used to add or remove an HTTP
 	// header from an HTTP response before it is sent to the client.
 	ResponseHeaderModifier *HTTPHeaderFilter
+
+	// RequestRedirectFilter can be used to redirect an HTTP
+	// request with custom status code and location.
+	RequestRedirect *HTTPRequestRedirectFilter
 }
 
 // Infrastructure holds the labels and annotations configuration,

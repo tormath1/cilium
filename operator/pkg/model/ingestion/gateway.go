@@ -259,6 +259,11 @@ func extractRoutes(listenerPort int32, hostnames []string, hr gatewayv1.HTTPRout
 								HeadersToRemove: f.ResponseHeaderModifier.Remove,
 							},
 						})
+					case gatewayv1.HTTPRouteFilterRequestRedirect:
+						backendHTTPFilters = append(backendHTTPFilters, &model.BackendHTTPFilter{
+							Name: fmt.Sprintf("%s:%s:%d", helpers.NamespaceDerefOr(be.Namespace, hr.Namespace), be.Name, uint32(*be.Port)),
+							RequestRedirect: toHTTPRequestRedirectFilter(listenerPort, f.RequestRedirect),
+						})
 					}
 				}
 			}

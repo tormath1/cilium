@@ -229,6 +229,10 @@ func envoyHTTPRoutes(httpRoutes []model.HTTPRoute, hostnames []string, hostNameS
 		// If there is only one backend, we can add the header filter to the route
 		if len(backends) == 1 {
 			for _, fn := range hRoutes[0].BackendHTTPFilters {
+				if fn.RequestRedirect != nil {
+					route.Action = getRouteRedirect(fn.RequestRedirect, listenerPort)
+				}
+
 				route.RequestHeadersToAdd = append(route.RequestHeadersToAdd, getHeadersToAdd(fn.RequestHeaderFilter)...)
 				route.RequestHeadersToRemove = append(route.RequestHeadersToRemove, getHeadersToRemove(fn.RequestHeaderFilter)...)
 				route.ResponseHeadersToAdd = append(route.ResponseHeadersToAdd, getHeadersToAdd(fn.ResponseHeaderModifier)...)
